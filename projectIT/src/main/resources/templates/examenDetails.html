@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Détails de l'Examen</title>
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .page {
+            background: #e2e2e5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+        .container {
+            background: white;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            padding: 40px;
+            border-radius: 8px;
+            width: 600px;
+            max-width: 90%;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            font-weight: bold;
+        }
+        a {
+            display: inline-block;
+            
+            color: #F1F1F2;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 300ms;
+            margin-top: 20px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        nav {
+            background-color: #474A59;
+            color: #F1F1F2; /* Correction de la couleur du texte */
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            color: #F1F1F2;
+            margin: 0 15px;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        nav a:hover {
+            background-color: #373844;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+        <a href="/examen/list">Examen</a>
+        <a href="/Enseignants">Personels</a>
+        <a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+        <a href="/groupes">Groupes</a>
+    </nav>
+    <div class="page">
+        <div class="container">
+            <h1>Détails de l'Examen</h1>
+            <ul>
+                <li><strong>Element Pédagogique:</strong> <span th:text="${examen.elementP.nomEpd}"></span></li>
+                <li><strong>Date:</strong> <span th:text="${#dates.format(examen.date, 'dd/MM/yyyy')}"></span></li>
+                <li><strong>Heure de Début:</strong> <span th:text="${#dates.format(examen.heureDebut, 'HH:mm')}"></span></li>
+                <li><strong>Durée Prévue:</strong> <span th:text="${examen.dureePrevue}"></span> minutes</li>
+                <li><strong>Coordinateur:</strong> <span th:text="${examen.coordinateur.FirstName}"></span></li>
+                <li><strong>Surveillances:</strong>
+                    <ul th:each="surveillance : ${examen.listeSurveillance}">
+                        <li>
+                            <strong>Salle:</strong> <span th:text="${surveillance.salle.nomSalle}"></span>
+                            <ul>
+                                <li><strong>Coordinateur d'Absence:</strong> <span th:text="${surveillance.administrateur.FirstName}"></span></li>
+                                <li><strong>Surveillants:</strong>
+                                    <ul>
+                                        <li th:each="surveillant : ${surveillance.enseignantSurveillanceList}">
+                                            <span th:text="${surveillant.FirstName}"></span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <a href="/examen/list" style="background-color: #007bff;">Retour à la liste des examens</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editer le Groupe</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .page {
+            background: #e2e2e5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            padding: 40px;
+            border-radius: 8px;
+            width: 800px;
+            max-width: 90%;
+            margin-top: 20px;
+        }
+        h1, h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #474A59;
+            color: #F1F1F2;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 300ms;
+        }
+        button:hover {
+            background-color: #373844;
+        }
+        a {
+            background-color: #474A59;
+            color: #F1F1F2;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 300ms;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        a:hover {
+            background-color: #373844;
+        }
+        nav {
+            background-color: #474A59;
+            color: #F1F1F2;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #F1F1F2;
+            margin: 0 15px;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        nav a:hover {
+            background-color: #373844;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+        <a href="/examen/list">Examen</a>
+        <a href="/Enseignants">Personnels</a>
+        <a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+        <a href="/groupes">Groupes</a>
+    </nav>
+
+    <div class="page">
+        <div class="container">
+            <h1>Editer le Groupe</h1>
+            <form th:action="@{/groupes/{id}(id=${groupe.id})}" th:object="${groupe}" method="post">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" th:field="*{nom}" />
+                <button type="submit">Enregistrer</button>
+            </form>
+            <h2>Ajouter un Enseignant</h2>
+            <form th:action="@{/groupes/{id}/addEnseignant(id=${groupe.id})}" method="post">
+                <label for="enseignantId">ID de l'Enseignant:</label>
+                <input type="text" id="enseignantId" name="enseignantId" />
+                <button type="submit">Ajouter</button>
+            </form>
+            <a href="/groupes">Retour à la liste des groupes</a>
+        </div>
+    </div>
+</body>
+</html>

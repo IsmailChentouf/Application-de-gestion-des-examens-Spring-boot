@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Groups</title>
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: #e2e2e5;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        a.button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #F1F1F2;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 300ms;
+            margin-bottom: 20px;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #474A59;
+            color: #F1F1F2;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        button {
+            background-color: #474A59;
+            color: #F1F1F2;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 300ms;
+        }
+        button:hover {
+            background-color: #373844;
+        }
+        nav {
+    background-color: #474A59;
+    color: #F1F1F2;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav a {
+    color: #F1F1F2;
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav a:hover {
+    background-color: #373844;
+    border-radius: 4px;
+}
+        
+    </style>
+</head>
+<body>
+<nav>
+        <a href="/examen/list">Examen</a>
+        <a href="/Enseignants">Personels</a>
+        <a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+        <a href="/groupes">Groupes</a>
+    </nav>
+    <div class="container">
+        <h1>Groups</h1>
+        <a th:href="@{/groupes/new}" class="button">Create New Group</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="groupe : ${groupes}">
+                    <td th:text="${groupe.nomGroupe}"></td>
+                    <td>
+                        <a th:href="@{/groupes/{id}(id=${groupe.idGroupe})}">View</a>
+                        <form th:action="@{/groupes/{id}/delete(id=${groupe.idGroupe})}" method="post" style="display:inline">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

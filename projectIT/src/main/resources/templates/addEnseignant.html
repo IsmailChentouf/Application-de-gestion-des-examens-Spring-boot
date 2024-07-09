@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add/Update Enseignant</title>
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .page {
+            background: #e2e2e5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+        }
+        .container {
+            background: white;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            padding: 40px;
+            border-radius: 8px;
+            width: 700px;  /* Agrandi le conteneur */
+            max-width: 90%;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .form-group {
+            flex: 1 1 calc(50% - 20px);
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group.full-width {
+            flex: 1 1 100%;
+        }
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select, input[type="email"], input[type="text"], button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            background-color: #474A59;
+            color: #F1F1F2;
+            cursor: pointer;
+            transition: background-color 300ms;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #373844;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 20px;
+        }
+        nav {
+    background-color: #474A59;
+    color: #F1F1F2;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav a {
+    color: #F1F1F2;
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav a:hover {
+    background-color: #373844;
+    border-radius: 4px;
+}
+        
+    </style>
+</head>
+<body>
+<nav>
+        <a href="/examen/list">Examen</a>
+        <a href="/Enseignants">Personnels</a>
+        <a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+        <a href="/groupes">Groupes</a>
+    </nav>
+    <div class="page">
+        <div class="container">
+            <h1 th:text="${enseignant.id} == null ? 'Add New Enseignant' : 'Update Enseignant'"></h1>
+            <form th:action="${enseignant.id} == null ? @{/add} : @{'/update/' + ${enseignant.id}}" th:object="${enseignant}" method="post">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" th:field="*{firstName}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" th:field="*{lastName}"/>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="filiere">Filiere:</label>
+                    <select id="filiere" th:field="*{filiere}">
+                        <option th:each="filiere : ${listFilieres}" th:value="${filiere.idFiliere}" th:text="${filiere.nomFiliere}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="departement">Departement:</label>
+                    <select id="departement" th:field="*{departement}">
+                        <option th:each="departement : ${listDepartements}" th:value="${departement.idDepartement}" th:text="${departement.nomDepartement}"></option>
+                    </select>
+                </div>
+                <div th:if="${error1}" class="error-message full-width">
+                    <p th:text="${error1}"></p>
+                </div>
+                <div th:if="${error2}" class="error-message full-width">
+                    <p th:text="${error2}"></p>
+                </div>
+                <div th:if="${error3}" class="error-message full-width">
+                    <p th:text="${error3}"></p>
+                </div>
+                <button type="submit" class="full-width" th:text="${enseignant.id} == null ? 'Submit' : 'Update'"></button>    
+            </form>
+        </div>
+    </div>
+</body>
+</html>

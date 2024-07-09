@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Group</title>
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: #e2e2e5;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #474A59;
+            color: #F1F1F2;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 300ms;
+        }
+        button:hover {
+            background-color: #373844;
+        }
+        nav {
+    background-color: #474A59;
+    color: #F1F1F2;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav a {
+    color: #F1F1F2;
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav a:hover {
+    background-color: #373844;
+    border-radius: 4px;
+}
+        
+    </style>
+</head>
+<body>
+<nav>
+        <a href="/examen/list">Examen</a>
+        <a href="/Enseignants">Personnels</a>
+        <a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+        <a href="/groupes">Groupes</a>
+    </nav>
+
+    <div class="container">
+        <h1>Create Group</h1>
+        <form th:action="@{/groupes}" th:object="${groupe}" method="post">
+            <div class="form-group">
+                <label for="nomGroupe">Group Name:</label>
+                <input type="text" id="nomGroupe" th:field="*{nomGroupe}" />
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</body>
+</html>
+s

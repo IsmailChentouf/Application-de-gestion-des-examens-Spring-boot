@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Examens</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .page {
+            background: #e2e2e5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+        .container {
+            background: white;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            padding: 40px;
+            border-radius: 8px;
+            width: 800px;
+            max-width: 90%;
+            margin-top: 20px;s
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #474A59;
+            color: #F1F1F2;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        a, button {
+            background-color: #474A59;
+            color: #F1F1F2;
+            padding: 8px 12px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 300ms;
+        }
+        a:hover, button:hover {
+            background-color: #373844;
+        }
+        form {
+            display: inline;
+        }
+        nav {
+            background-color: #474A59;
+            color: #F1F1F2;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #F1F1F2;
+            margin: 0 15px;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        nav a:hover {
+            background-color: #373844;
+            border-radius: 4px;
+        }
+        .btnAjout {
+            background-color: #007bff;
+            margin-bottom: 100px; /* Ajout de la marge supérieure */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/examen/list">Examen</a>
+        <a href="/Enseignants">Personnels</a>
+        <a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+        <a href="/groupes">Groupes</a>
+    </nav>
+
+    <div class="page">
+        <div class="container">
+            <h1>Liste des Examens</h1>
+            <a th:href="@{/examen/add}" class="btnAjout btn btn-success mb-2">Ajouter Examen</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Element Pédagogique</th>
+                        <th>Date</th>
+                        <th>Heure de Début</th>
+                        <th>Durée Prévue</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="examen : ${examens}">
+                        <td th:text="${examen.elementP.nomEpd}">Element Pédagogique</td>
+                        <td th:text="${#dates.format(examen.date, 'dd/MM/yyyy')}">Date</td>
+                        <td th:text="${#dates.format(examen.heureDebut, 'HH:mm')}">Heure de Début</td>
+                        <td th:text="${examen.dureePrevue}">Durée Prévue</td>
+                        <td>
+                            <a th:href="@{/examen/details/{id}(id=${examen.idExamen})}" style="background-color: #007bff;">Détails</a>
+                            <form th:action="@{/examen/delete/{id}(id=${examen.idExamen})}" method="post" style="display: inline;">
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this exam?')">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

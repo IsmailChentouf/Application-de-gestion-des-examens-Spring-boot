@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Group Detail</title>
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: #e2e2e5;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        h1 {
+        
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #474A59;
+            color: #F1F1F2;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 300ms;
+        }
+        button:hover {
+            background-color: #373844;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        a.button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #F1F1F2;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 300ms;
+            text-align: center;
+            margin-top: 20px;
+            display: block;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+        nav {
+    background-color: #474A59;
+    color: #F1F1F2;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav a {
+    color: #F1F1F2;
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav a:hover {
+    background-color: #373844;
+    border-radius: 4px;
+}
+        
+    </style>
+</head>
+<body>
+<nav>
+        <a href="/examen/list">Examen</a>
+        <a href="/Enseignants">Personnels</a>
+        <a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+        <a href="/groupes">Groupes</a>
+    </nav>
+    <div class="container">
+        <h1 th:text="${groupe.nomGroupe}">Group Name</h1>
+        <h2>Assign Teachers</h2>
+        <form th:action="@{/groupes/{id}/addEnseignant(id=${groupe.idGroupe})}" method="post">
+            <select name="enseignantId">
+                <option th:each="enseignant : ${enseignants}" th:value="${enseignant.id}" th:text="${enseignant.firstName + ' ' + enseignant.lastName}"></option>
+            </select>
+            <button type="submit">Add</button>
+        </form>
+        <h2>Teachers in Group</h2>
+        <ul>
+            <li th:each="enseignant : ${groupe.listeEnseignants}" th:text="${enseignant.firstName + ' ' + enseignant.lastName}"></li>
+        </ul>
+        <a th:href="@{/groupes}" class="button">Back to Groups</a>
+    </div>
+</body>
+</html>

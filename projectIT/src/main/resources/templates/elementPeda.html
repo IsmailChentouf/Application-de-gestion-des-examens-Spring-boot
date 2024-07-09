@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Éléments Pédagogiques</title>
+    <style>
+        body {
+            background: white;
+            font-family: 'Inter UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .page {
+            background: #e2e2e5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+        }
+        .container {
+            background: white;
+            box-shadow: 0px 0px 40px 16px rgba(0, 0, 0, 0.22);
+            padding: 40px;
+            border-radius: 8px;
+            width: 800px;
+            max-width: 90%;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            padding: 10px;
+            display: inline-block;
+            transition: background-color 300ms;
+        }
+        a:hover {
+            background-color: #0056b3;
+            color: #F1F1F2;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            position: relative;
+        }
+        .sub-dropdown {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            top: 0;
+            left: 100%;
+        }
+        .dropdown-item:hover .sub-dropdown {
+            display: block;
+        }
+        nav {
+    background-color: #474A59;
+    color: #F1F1F2;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav a {
+    color: #F1F1F2;
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+nav a:hover {
+    background-color: #373844;
+    border-radius: 4px;
+}
+        
+    </style>
+</head>
+<body>
+<nav>
+       <a href="/examen/list">Examen</a>
+		<a href="/Enseignants">Personnels</a>
+		<a href="/ElementP/elementPeda">Elements Pedagogiques</a>
+		<a href="/groupes">Groupes</a>
+
+    </nav>
+    <div class="page">
+        <div class="container">
+            <h1>Éléments Pédagogiques</h1>
+            <h1>Liens et Filières</h1>
+            <a th:href="@{/cp1}">CP1</a>
+            <a th:href="@{/cp2}">CP2</a>
+            <div class="dropdown">
+                <a>Cycle</a>
+                <div class="dropdown-content">
+                    <div th:each="filiere : ${listFilieres}">
+                        <div class="dropdown-item">
+                            <a th:href="@{'/filiere/' + ${filiere.idFiliere}}" th:text="${filiere.nomFiliere}"></a>
+                            <div class="sub-dropdown">
+                                <span th:text="'Niveaux: ' + ${#lists.size(filiere.niveaux)}"></span>
+                                <div th:each="niveau : ${filiere.niveaux}">
+                                    <a th:href="@{'/ElementP/affichageElementsPedagogiques/' + ${niveau.idNiveau}}" th:text="${niveau.titre}"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Other content as needed -->
+        </div>
+    </div>
+</body>
+</html>
